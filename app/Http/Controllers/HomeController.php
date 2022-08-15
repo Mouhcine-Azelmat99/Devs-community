@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\Save;
 use Illuminate\Support\Facades\Auth;
@@ -14,11 +15,17 @@ use LanguageDetector\LanguageDetector;
 class HomeController extends Controller
 {
     public function index(){
-        // session()->put('isDark', true);
-        // dd(session('isDark'));
         $user_id=Auth::id();
+        $setting=Setting::where('user_id',$user_id)->first();
+        if($setting){
+            $langue=$setting->langue;
+            $theme=$setting->theme;
+        }else{
+            $theme=false;
+            $langue='an';
+        }
         $categories=Category::all();
-        return view('home',compact('user_id','categories'));
+        return view('home',compact('user_id','categories','langue','theme'));
     }
 
     public function switchModes($mode)

@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 use LanguageDetector\LanguageDetector;
 use Nette\Utils\Image;
+use App\Models\Setting;
 
 
 class QuestionController extends Controller
@@ -17,7 +18,15 @@ class QuestionController extends Controller
     public function index()
     {
         $user_id=Auth::id();
-        return view('questions.questions',compact('user_id'));
+        $setting=Setting::where('user_id',$user_id)->first();
+        if($setting){
+            $langue=$setting->langue;
+            $theme=$setting->theme;
+        }else{
+            $theme=false;
+            $langue='an';
+        }
+        return view('questions.questions',compact('user_id','langue','theme'));
     }
 
     public function getQuestions()
@@ -51,7 +60,15 @@ class QuestionController extends Controller
     public function showQuestion($slug)
     {
         $user_id=Auth::id();
-        return view('questions.showQuestion',compact('slug','user_id'));
+        $setting=Setting::where('user_id',$user_id)->first();
+        if($setting){
+            $langue=$setting->langue;
+            $theme=$setting->theme;
+        }else{
+            $theme=false;
+            $langue='an';
+        }
+        return view('questions.showQuestion',compact('slug','user_id','langue','theme'));
     }
     public function show($slug)
     {

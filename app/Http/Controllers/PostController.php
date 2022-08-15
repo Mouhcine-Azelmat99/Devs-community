@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Save;
+use App\Models\Setting;
 use Nette\Utils\Image;
 
 use LanguageDetector\LanguageDetector;
@@ -55,8 +56,11 @@ class PostController extends Controller
     public function show($slug)
     {
         $user_id=Auth::id();
+        $setting=Setting::where('user_id',$user_id)->first();
+        $langue=$setting->langue;
+        $theme=$setting->theme;
         $categories=Category::all();
-        return view('posts.showPost',compact('slug','user_id','categories'));
+        return view('posts.showPost',compact('slug','user_id','categories','langue','theme'));
     }
 
     /**
@@ -136,8 +140,11 @@ class PostController extends Controller
     {
         $user_id=Auth::id();
         $category=Category::where('name',$category)->first();
+        $setting=Setting::where('user_id',$user_id)->first();
         $category_id=$category->id;
-        return view('posts.postsCategories',compact('category_id','user_id'));
+        $langue=$setting->langue;
+        $theme=$setting->theme;
+        return view('posts.postsCategories',compact('category_id','user_id','langue','theme'));
     }
 
     public function getPostsByCategory($category_id,$user_id){

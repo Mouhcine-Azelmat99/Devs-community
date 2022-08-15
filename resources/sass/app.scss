@@ -224,6 +224,31 @@ header{
                     color: $bleu;
                 }
             }
+            .dropdown {
+                .btn{
+                    border: 2px solid $bleu;
+                    padding:8px 5px;
+                    border-radius:0;
+                    font-size:1.1rem;
+                    background-color:$bleu;
+                    transition: $trans;
+                    display: block;
+                    &:hover{
+                        background-color: transparent;
+                    }
+                    &:focus{
+                        box-shadow:none;
+                    }
+                }
+                ul{
+                    padding:10px;
+                    li button{
+                        width:90%;
+                        background-color:$grey;
+                        color:#222;
+                    }
+                }
+            }
             #theme{
                 margin-top:0;
                 form>button{
@@ -373,8 +398,15 @@ header{
                 }
                 .image{
                     position: relative;
-                    text-align:center;
+                    a{
+                        text-decoration:underline;
+                        margin:20px;
+                        color:$bleu;
+                        font-size:1.3rem;
+                        padding:10px;
+                    }
                     img{
+                        text-align:center;
                         max-width: 80%;
                         max-height: 500px;
                         width: 100%;
@@ -493,6 +525,9 @@ header{
             }
             .reponds{
                 h1{
+                    display:flex;
+                    align-items:center;
+                    justify-content:space-evenly;
                     cursor:pointer;
                     font-size:1.5rem;
                     font-weight:600;
@@ -508,6 +543,10 @@ header{
                         border-radius: 50%;
                         font-size: 1.2rem;
                         margin-left: 30px;
+                    }
+                    p{
+                        margin-top:15px;
+                        color:$white;
                     }
                 }
                 li img{
@@ -697,6 +736,7 @@ header{
                 background-color:$grey;
                 transition: $trans;
                 cursor: pointer;
+                position:relative;
                 a{
                     width: 100%;
                     color: $blue-secondaire;
@@ -870,13 +910,14 @@ header{
   }
 
 #ressources{
+    direction:ltr;
     background-color: #f8f9fa;
-    padding: 30px 10px;
+    padding: 30px 15px;
     padding-top:180px;
     .col-lg-8{
         margin-left:40px;
     }
-    .col-lg-4{
+    .col-lg-3{
         padding: 10px;
         background-color: $white;
         box-shadow: $shadow;
@@ -922,8 +963,10 @@ header{
 
 @media (min-width: 767px) {
     #ressources{
-        .col-lg-8 .row{
-            margin-left:20px;
+        padding: 30px 70px;
+        padding-top:180px;
+        .col-lg-8 {
+            margin-left:68px;
         }
     }
 }
@@ -936,9 +979,9 @@ header{
             margin: 0 auto;
             width:80%;
         }
-        .col-lg-4{
-            margin: 20px auto;
-        }
+        // .col-lg-3{
+        //     margin: 20px auto;
+        // }
     }
     #main{
         margin-top:170px;
@@ -1140,7 +1183,7 @@ footer.dark{
 }
 #ressources.dark{
     background-color: $main-dark !important;
-    .col-lg-4{
+    .col-lg-3{
         background-color: $secondair-dark !important;
         h1{
             color: $dark-white !important;
@@ -1278,4 +1321,8 @@ footer.dark{
     .profile .col-lg-8 .saved_posts .col-4{
         width: 46.3333%;
     }
+}
+// arab style 
+body.arab{
+    direction:rtl;
 }

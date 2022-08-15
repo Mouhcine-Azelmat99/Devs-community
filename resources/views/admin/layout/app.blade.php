@@ -32,7 +32,7 @@
                         </a>
                     </li>
                     <li class="nav-item my-2">
-                        <a href="#" class="nav-link text-white px-0 align-middle">
+                        <a href="{{ route('admin.users') }}" class="nav-link text-white px-0 align-middle">
                             <i class="fas fa-users"></i> <span class="ms-1 d-none d-sm-inline">Users</span> </a>
                     </li>
                     <li class="nav-item my-2">
@@ -44,11 +44,11 @@
                             <i class="fas fa-bars"></i> <span class="ms-1 d-none d-sm-inline">Catgeories</span> </a>
                     </li>
                     <li class="nav-item my-2">
-                        <a href="#" class="nav-link text-white px-0 align-middle">
+                        <a href="{{ route('admin.questions') }}" class="nav-link text-white px-0 align-middle">
                             <i class="fas fa-question-circle"></i> <span class="ms-1 d-none d-sm-inline">Questions</span> </a>
                     </li>
                     <li class="nav-item my-2">
-                        <a href="#" class="nav-link text-white px-0 align-middle">
+                        <a href="{{ route('admin.ressources') }}" class="nav-link text-white px-0 align-middle">
                             <i class="fas fa-chalkboard-teacher"></i> <span class="ms-1 d-none d-sm-inline">Ressources</span> </a>
                     </li>
                 </ul>

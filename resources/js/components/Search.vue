@@ -1,7 +1,7 @@
 <template>
     <div class="col-lg-4">
         <div class="search mr-auto">
-            <input @focus="showResult=true" v-model="post_search" class="form-control" placeholder="search ...">
+            <input @focus="showResult=true" v-model="post_search" class="form-control" :placeholder="placeholder_langue()">
             <button class="btn btn-primary" @click="search_btn">
             <i v-if="!post_search && !showResult" class="fa-solid fa-magnifying-glass"></i>
             <i v-if="post_search || showResult" class="fa-solid fa-xmark"></i>
@@ -22,6 +22,7 @@
 <script>
 
 export default {
+    props: ["langue"],
     data(){
         return{
             posts:[],
@@ -33,6 +34,9 @@ export default {
     methods: {
         arDir:function(elem){
             return elem=="ar"||elem=='fa' ? 'right' : 'left';
+        },
+        placeholder_langue(){
+            return this.langue=='ar' ? "ابحث من هنا ..." : "Search ...";
         },
         search_btn(){
             this.post_search="";

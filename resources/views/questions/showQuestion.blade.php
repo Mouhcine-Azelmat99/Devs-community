@@ -9,7 +9,7 @@
 
 <section id="questions" class="@if (session('isDark')) dark @endif">
     <div class="container-fluid">
-        <Showuestion :user_id='@json($user_id)' :slug='@json($slug)'></Showuestion>
+        <Showuestion :user_id='@json($user_id)' :slug='@json($slug)' :langue='@json($langue)'></Showuestion>
     </div>
 </section>
 

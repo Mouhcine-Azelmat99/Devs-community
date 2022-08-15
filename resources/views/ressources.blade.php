@@ -9,7 +9,7 @@
 
 <section id="ressources" class="@if (session('isDark')) dark @endif">
     <div class="container-fluid">
-        <Ressources></Ressources>
+        <Ressources :user_id='@json($user_id)' :langue='@json($langue)'></Ressources>
     </div>
 </section>
 

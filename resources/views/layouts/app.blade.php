@@ -19,10 +19,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 </head>
-<body>
-    <div class="loader">
+<body  @if($langue=='ar')
+    class="arab"
+@endif>
+    {{-- <div class="loader">
         <img src="{{asset('images/Pulse-1s-200px.svg')}}" alt="loader">
-    </div>
+    </div> --}}
     @auth @else
         <div class="login_modal">
             <section class="login">
@@ -148,8 +150,8 @@
     <script>
     $(function(){
         setTimeout(() => {
-            $(".loader").fadeOut(500)
-        }, 1000);
+            $(".loader").fadeOut(200)
+        }, 500);
     })
     $(function(){
         setTimeout(() => {

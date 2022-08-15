@@ -9,8 +9,8 @@ use App\Http\Controllers\FaceBookController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SaveController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\RessourceController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +45,11 @@ Route::prefix('admin')->name('admin.')->group( function(){
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('categories', [CategoryController::class, 'index'])->name('categories');
     Route::get('users', [AdminController::class, 'getUsers'])->name('users');
+    Route::get('questions', [AdminController::class, 'questions'])->name('questions');
+    Route::get('ressources', [AdminController::class, 'ressources'])->name('ressources');
+    Route::delete('ressources/{id}', [AdminController::class, 'deleteRessources'])->name('ressources.destroy');
+    Route::get('sources', [AdminController::class, 'deleteSources'])->name('sources.destroy');
+    Route::delete('questions/{id}', [AdminController::class, 'deleteQuestion'])->name('questions.destroy');
     Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::delete('categories/{id}', [CategoryController::class, 'delete'])->name('categories.delete');
     Route::resource('posts',PostController::class);
@@ -69,3 +74,7 @@ Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
 Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
 Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
 Route::get('/questions/{slug}', [QuestionController::class, 'showQuestion'])->name('questions.show');
+
+// Setting
+Route::post('/langue', [SettingController::class, 'changeLangue'])->name('langue');
+Route::post('/theme', [SettingController::class, 'changeTheme'])->name('theme');

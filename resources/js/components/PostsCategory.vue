@@ -1,8 +1,41 @@
 <template>
     <div class="row">
      <div class="col-lg-7 mx-auto" id="content">
-        <div v-if="isloading">
-        <div class="item" v-for="post in posts" :key="post.id">
+     <!-- start loading  -->
+            <div v-if="!isloaded">
+                <div class="item">
+                    <div>
+                        <!-- <span class="placeholder col-6"></span> -->
+                        <p class="d-flex justify-content-between placeholder-glow">
+                            <span class="placeholder col-6"></span>
+                            <span class="placeholder col-2"></span>
+                        </p>
+                        <p class="card-text placeholder-glow">
+                            <span class="placeholder col-3"></span>
+                            <span class="placeholder col-2"></span>
+                        </p>
+                    </div>
+                    <div class="body my-4 placeholder-glow">
+                        <p class="card-text placeholder-glow">
+                            <span class="placeholder col-7"></span>
+                            <span class="placeholder col-4"></span>
+                            <span class="placeholder col-4"></span>
+                            <span class="placeholder col-6"></span>
+                            <span class="placeholder col-8"></span>
+                        </p>
+                        <div class="image my-3">
+                            <span class="placeholder w-75 py-5"></span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between placeholder-glow">
+                        <a href="#" tabindex="-1" class="btn disabled placeholder col-2 mr-3"></a>
+                        <a href="#" tabindex="-1" class="btn disabled placeholder col-2 mr-3"></a>
+                        <a href="#" tabindex="-1" class="btn disabled placeholder col-2 mr-3"></a>
+                    </div>
+                </div>
+            </div>
+            <!-- end of loading  -->
+        <div class="item" v-else v-for="post in posts" :key="post.id">
             <div class="header" :style="{ direction:arDir(post.lg) }" @click="showPost(post.slug)">
                 <h1>{{ post.title }}</h1>
                 <div>
@@ -18,12 +51,7 @@
                 <p v-if="post.content"> {{ diplayContent(post.content) }}
                 <span v-if="!showMore && post.content.length>100">
                     <button @click="showMore=true">
-                    Voir plus
-                    </button>
-                </span>
-                <span v-if="showMore && post.content.length>100">
-                    <button @click="showMore=false">
-                    Voir moins
+                    {{change_langue("Show More","اقرا المزيد")}}
                     </button>
                 </span>
                 </p>
@@ -35,15 +63,15 @@
             <div class="footer">
                 <button @click="addLike(post.id)" :class="{ 'liked':post.liked }" :disabled="post.liked">
                     <i class="fas fa-thumbs-up"></i>
-                    <span>{{ post.likes }} Like</span>
+                    <span>{{ post.likes }} {{change_langue('Like','اعجاب')}}</span>
                 </button>
                 <button @click="showComment=!showComment" >
                     <i class="fas fa-comment"></i>
-                    <span>{{ post.comments.length }} Comments</span>
+                    <span>{{ post.comments.length }}  {{change_langue('Comments','تعاليق')}}</span>
                 </button>
                 <button @click="savePost(post.id)" :class="{ 'saved':post.saved }" :disabled="post.saved">
                     <i class="fas fa-bookmark"></i>
-                    <span>Save</span>
+                    <span>{{change_langue('Save','حفظ')}}</span>
                 </button>
             </div>
             <div id="comment" v-if="showComment">
@@ -57,33 +85,32 @@
                     </li>
                 </ul>
                 <div class="form">
-                    <textarea   cols="30" v-model="comment.content"  class="form-control" placeholder="Commenter" rows="1" required></textarea>
+                    <textarea   cols="30" v-model="comment.content"  class="form-control" :placeholder="change_langue('Comment','تعليق')" rows="1" required></textarea>
                     <button type="submit" @click="addComment(post.id)"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
         </div>
-        </div>
      </div>
 
-     <div class="col-lg-3" id="sidebar">
+    <div class="col-lg-3" id="sidebar">
     <div class="addPost">
     <form method="POST" v-on:submit.prevent="formSubmit" enctype="multipart/form-data">
         <div v-if="error" class="alert alert-danger">
             {{error}}
         </div>
-        <input type="text" v-model="post_form.title" class="form-control" placeholder="Titre *" required>
-        <textarea v-model="post_form.content" placeholder="Content ..." id="body" class="form-control"></textarea>
+        <input type="text" v-model="post_form.title" class="form-control" :placeholder="change_langue('Titre *','العنوان *')" required>
+        <textarea v-model="post_form.content" :placeholder="change_langue('Content ...','المحتوى ...')" id="body" class="form-control"></textarea>
         <div class="mb-3">
             <select class="form-select" :ref="post_form.category_id">
-                <option :disabled="true" selected>Select Category</option>
+                <option :disabled="true" selected>{{change_langue('Select Category',"اختر الصنف")}}</option>
                 <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }} </option>
             </select>
-            <input v-if="post_form.category_id == 0" type="text" v-model="post_form.newCategory" class="form-control" placeholder="New Category">
+            <input v-if="post_form.category_id == 0" type="text" v-model="post_form.newCategory" class="form-control" :placeholder="change_langue('New Category','اضافة صنف جدبد')">
         </div>
         <input type="text" v-model="post_form.cat" class="form-control" placeholder="#">
-        <input type="file" @change="onChange" class="form-control" placeholder="Upload image">
+        <input type="file" @change="onChange" class="form-control" :placeholder="change_langue('Upload image','تحميل صورة')">
         <div class="d-grid gap-2">
-            <button type="submit" class="btn ">Ajouter</button>
+            <button type="submit" class="btn ">{{ change_langue('Add',"نشر") }}</button>
         </div>
     </form>
     </div>
@@ -116,9 +143,10 @@ Vue.use(VueToastr, {
 Vue.config.productionTip = false;
 
 export default {
-    props:['user_id','category_id'],
+    props:['user_id','category_id','langue'],
     data(){
         return{
+            isloaded:false,
             posts:[],
             post_form:{
                 title:'',
@@ -151,6 +179,9 @@ export default {
         };
     },
     methods: {
+        change_langue(an,ar){
+            return this.langue=='ar'? ar : an;
+        },
         getImage:function(elem){
             return '/images/'+elem;
         },
@@ -253,7 +284,7 @@ export default {
             axios.get('/api/category/posts/'+this.category_id+'/'+this.user_id)
             .then((res) => {
                 this.posts=res.data;
-                this.isloading=true;
+                this.isloaded=true;
             })
             .catch(err=>console.log(err));
         },

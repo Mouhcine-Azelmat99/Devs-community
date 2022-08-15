@@ -9,7 +9,7 @@
 
 <section id="main" class="@if (session('isDark')) main-dark @endif">
     <div class="container">
-        <Show :user_id='@json($user_id)' :slug='@json($slug)'></Show>
+        <Show :user_id='@json($user_id)' :slug='@json($slug)' :langue='@json($langue)'></Show>
     </div>
 </section>
 

@@ -14,6 +14,8 @@ use App\Models\Save;
 use App\Models\Like;
 use App\Models\Solution;
 use App\Models\Question;
+use App\Models\Setting;
+use App\Models\Source;
 
 class User extends Authenticatable
 {
@@ -35,6 +37,9 @@ class User extends Authenticatable
     public function post(){
         return $this->hasMany(Post::class);
     }
+    public function source(){
+        return $this->hasMany(Source::class);
+    }
     public function comment(){
         return $this->hasMany(Comment::class);
     }
@@ -49,6 +54,11 @@ class User extends Authenticatable
     }
     public function solution(){
         return $this->hasMany(Solution::class);
+    }
+
+    public function setting()
+    {
+        return $this->hasOne(Setting::class);
     }
 
     /**

@@ -4,24 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Ressource;
 use App\Models\User;
 
 
-class Source extends Model
+class Setting extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'lien_site',
-        'lien_youtub',
-        'ressource_id',
+        'langue',
         'user_id',
+        'dark_theme',
     ];
-    public function ressource(){
-        return $this->belongsTo(Ressource::class);
-    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }

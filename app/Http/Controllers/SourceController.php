@@ -29,6 +29,7 @@ class SourceController extends Controller
         }
         $source=Source::create([
             'title'=>$request->title,
+            'user_id'=>$request->user_id,
             'lien_youtub'=>$request->lien2,
             'lien_site'=>$request->lien1,
             'ressource_id'=>$request->ressource_id,
