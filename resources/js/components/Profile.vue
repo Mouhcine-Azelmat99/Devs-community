@@ -1,8 +1,7 @@
 <template>
     <div class="container">
         <div class="row">
-            <div v-if="!isloaded1">
-                <div class="col-lg-4">
+                <div class="col-lg-3" v-if="!isloaded1">
                     <div class="img-circle">
                         <p class="placeholder-glow">
                             <span class="placeholder col-4"></span>
@@ -29,27 +28,26 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div v-else class="col-lg-4">
+            <div v-else class="col-lg-3">
                 <div class="img-circle">
                     {{ letter }}
                 </div>
                 <div class="info">
                     <ul>
                         <li>
-                            <p>Username</p>
+                            <p>{{ change_langue('username','اسم المستخدم') }}</p>
                             <h3>{{ user.username }}</h3>
                         </li>
                         <li>
-                            <p>Email</p>
+                            <p>{{ change_langue('Email','جمايل الحساب') }}</p>
                             <h3>{{ user.email }}</h3>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-9">
                 <div class="saved_posts">
-                    <h1>saved posts</h1>
+                    <h1>{{ change_langue('Saved posts','المنشورات المحفطة') }}</h1>
                     <div class="row">
                         <div v-if="!isloaded2" class="row">
                             <div class="col-4">
@@ -101,7 +99,7 @@
                                     {{ post.title }}
                                 </h2>
                                 <button
-                                    v-if="user_id == post.user_id"
+                                    
                                     @click="deleteSaved(post.id)"
                                 >
                                     <i class="fa-solid fa-xmark"></i>
@@ -129,7 +127,7 @@
                     </div>
                 </div>
                 <div class="saved_posts mt-5">
-                    <h1>Publied posts</h1>
+                    <h1>{{ change_langue('My Posts','منشوراتي') }}</h1>
                     <div class="row">
                         <div v-if="!isloaded3" class="row">
                             <div class="col-4">
@@ -181,7 +179,7 @@
                                     {{ post.title }}
                                 </h2>
                                 <button
-                                    v-if="user_id == post.user_id"
+                                    
                                     @click="deletePost(post.id)"
                                 >
                                     <i class="fa-solid fa-xmark"></i>
@@ -209,7 +207,7 @@
                     </div>
                 </div>
                 <div class="saved_posts mt-5">
-                    <h1>Publied Question</h1>
+                    <h1>{{ change_langue('My Questions','اسئلتي') }}</h1>
                     <div class="row">
                         <div v-if="!isloaded4" class="row">
                             <div class="col-4">
@@ -261,7 +259,7 @@
                                     {{ question.title }}
                                 </h2>
                                 <button
-                                    v-if="user_id == question.user_id"
+                                    
                                     @click="deleteQuestion(question.id)"
                                 >
                                     <i class="fa-solid fa-xmark"></i>
@@ -298,7 +296,7 @@
 
 <script>
 export default {
-    props: ["user_id"],
+    props: ["user_id",'langue'],
     data() {
         return {
             letter: "",
@@ -313,6 +311,9 @@ export default {
         };
     },
     methods: {
+        change_langue(an,ar){
+            return this.langue=='ar'? ar : an;
+        },
         isDocument(fileName) {
             var ext = fileName.substr(fileName.lastIndexOf(".") + 1);
             if (ext == "pdf" || ext == "docx") return true;

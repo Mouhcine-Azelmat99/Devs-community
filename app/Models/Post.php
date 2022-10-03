@@ -21,7 +21,6 @@ class Post extends Model
         'content',
         'img',
         'user_id',
-        'cat',
         'category_id',
     ];
 

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="images/devs-logo.png">
     <!-- bootsrap style  -->
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --}}
     <!-- font awesome  -->
@@ -22,9 +22,9 @@
 <body  @if($langue=='ar')
     class="arab"
 @endif>
-    {{-- <div class="loader">
+    <div class="loader">
         <img src="{{asset('images/Pulse-1s-200px.svg')}}" alt="loader">
-    </div> --}}
+    </div>
     @auth @else
         <div class="login_modal">
             <section class="login">
@@ -139,46 +139,65 @@
     <div id="app">
         @yield('content')
     </div>
-    <div class="icon-bar">
+    {{-- <div class="icon-bar">
         <a href="#" class="facebook"><i class="fab  fa-facebook"></i></a>
         <a href="#" class="twitter"><i class="fab  fa-twitter"></i></a>
         <a href="#" class="google"><i class="fab  fa-google"></i></a>
         <a href="#" class="linkedin"><i class="fab  fa-linkedin"></i></a>
         <a href="#" class="youtube"><i class="fab  fa-youtube"></i></a>
-  </div>
+  </div> --}}
+    <div id="theme" class="@if ($dark_theme) theme-dark @endif">
+    <form action="{{ route('theme') }}" method="POST">
+            @csrf
+            <input type="hidden" value="{{$dark_theme}}" name="theme">
+            <button>
+            @if($dark_theme)
+                <img src="/images/brightness.png" alt="">
+            @else
+                <i class="fas fa-moon"></i>
+            @endif
+        </button>
+        </form>
+    </div>
+    <div id="gotop" class="@if ($dark_theme) gotop-dark @endif">
+        <button onclick="topFunction()">
+            <i class="fas fa-angle-double-up"></i>
+        </button>
+    </div>
 
     <script>
     $(function(){
         setTimeout(() => {
-            $(".loader").fadeOut(200)
+            $(".loader").fadeOut(400)
         }, 500);
     })
     $(function(){
         setTimeout(() => {
             $(".login_modal").fadeIn(1000)
-        }, 5000);
+        }, 20000);
     })
+    function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    }
+    var mybutton = document.getElementById("gotop");
 
-    var prevScrollpos = window.pageYOffset;
-        window.onscroll = function() {
-        var currentScrollPos = window.pageYOffset;
-        if (prevScrollpos > currentScrollPos) {
-            document.getElementById("header").style.top = "0";
-        } else {
-            if (window.matchMedia('screen and (max-width: 768px)').matches) {
-                document.getElementById("header").style.top = "-225px";
-            }else{
-                document.getElementById("header").style.top = "-165px";
-            }
-        }
-        prevScrollpos = currentScrollPos;
-        }
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script> --}}
+    <script src="{{ mix('js/main.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> --}}
 
 </body>
 </html>

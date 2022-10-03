@@ -41,6 +41,24 @@ $("#register_show").click(function () {
   $("#register_form").show();
   $("#list_login").removeClass("active");
   $("#list_register").addClass("active");
-});
+}); // When the user clicks on the button, scroll to the top of the document
+
+var prevScrollpos = window.pageYOffset;
+
+window.onscroll = function () {
+  var currentScrollPos = window.pageYOffset;
+
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById("header").style.top = "0";
+  } else {
+    if (window.matchMedia('screen and (max-width: 768px)').matches) {
+      document.getElementById("header").style.top = "-225px";
+    } else {
+      document.getElementById("header").style.top = "-165px";
+    }
+  }
+
+  prevScrollpos = currentScrollPos;
+};
 /******/ })()
 ;

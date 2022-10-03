@@ -14,6 +14,12 @@ $bleu:#0097e6;
 $trans : 0.4s ease;
 $shadow:rgba(0, 0, 0, 0.1) 0px 4px 12px;
 
+// Dark mode
+$main-dark:#212529;
+$secondair-dark:#343a40;
+$dark-white:#f8f9fa;
+$dark-grey:#d1ccc0;
+
 @import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;1,700&family=Cairo:wght@600&family=IM+Fell+Great+Primer&family=Karla:wght@700&family=Lato:wght@700;900&family=Merriweather+Sans:wght@800&display=swap');*{
     margin: 0;
     padding: 0;
@@ -38,6 +44,65 @@ button{
     border: none;
 }
 
+#theme{
+    background-color: $white;
+    padding: 4;
+    position: fixed;
+    bottom: 20px;
+    border-radius: 50%;
+    right: 13px;
+    box-shadow: $shadow;
+    button{
+        padding: 10px;
+        border-radius: 50%;
+        
+        background: $dark-bleu;
+        color: $white;
+        i{
+            font-size: 20px;
+        }
+        img{
+            width:30px;
+            height:auto;
+        }
+    }
+}
+#theme.theme-dark{
+    background-color:$dark-bleu;
+    button{
+        background-color:$white;
+        color:$dark-bleu;
+    }
+}
+#gotop{
+    background-color: $white;
+    padding: 4;
+    display:none;
+    position: fixed;
+    bottom: 80px;
+    border-radius: 50%;
+    right: 14px;
+    box-shadow: $shadow;
+    button{
+        padding: 12px 15px;
+        border-radius: 50%;
+        background: $dark-bleu;
+        color: $white;
+        i{
+            font-size: 20px;
+        }
+    }
+}
+#gotop.gotop-dark{
+    background-color:$dark-bleu;
+    button{
+        padding: 15px 18px;
+        background-color:$white;
+        color:$dark-bleu;
+    }
+}
+
+
 // loadeing
 .loader{
     position:fixed;
@@ -47,15 +112,24 @@ button{
     margin: 0 auto;
     top:0;
     left:0;
-    padding-top: 14%;
-    padding-left: 45%;
+    padding:14% 45%;
     z-index:22;
 
 }
 @media (max-width: 767px) {
     .loader{
-        padding-top: 41%;
-        padding-left: 36%;
+        padding: 38% 35%;
+    }
+    #gotop,#theme{
+        right:7px;
+    }
+    #gotop button{
+        padding: 9px 12px;
+    }
+    #gotop.gotop-dark{
+        button{
+            padding: 12px 16px;
+        }
     }
 }
 
@@ -137,8 +211,13 @@ header{
         border-bottom:6px solid $bleu;
         // padding: 15px;
         .navbar-brand img{
-            width:50px;
+            width:150px;
             height:auto;
+        }
+        .navbar-toggler{
+            padding:9px;
+            border:1px solid $bleu;
+            background-color:$main-dark;
         }
         form #dark_mode{
             font-size: 1.5rem;
@@ -169,7 +248,7 @@ header{
             display: none;
         }
         #menu{
-            margin-left: 80px;
+            margin:0 80px;
             li a{
                 color: $white;
                 font-size: 1.1rem;
@@ -276,12 +355,11 @@ header{
         }
     }
     .navbar{
-        padding: 10px 20px;
-        form #dark_mode{
-            display: block;
-        }
+        padding: 10px;
         #menu{
-            margin-left: 0;
+            text-align:center;
+            border-bottom : 2px solid $grey;
+            margin: 0;
             li a{
                 &:hover{
                     color: $bleu;
@@ -293,8 +371,13 @@ header{
         }
         #social-media{
             padding-bottom: 40px;
+            text-align:center;
             margin-top: 20px;
+            li form{
+                text-align:center;
+            }
             li a{
+                
                 background-color: none;
                 color: $white;
                 border: none;
@@ -302,9 +385,6 @@ header{
                     color: $bleu;
                     background: none;
                 }
-            }
-            li#theme{
-                display: none;
             }
             a,form>button{
                 background:none;
@@ -395,6 +475,7 @@ header{
                             color: $blue-secondaire;
                         }
                     }
+                    
                 }
                 .image{
                     position: relative;
@@ -433,6 +514,12 @@ header{
                         color: $green;
                         font-weight: 500;
                     }
+                }
+                .copy_button:active{
+                    i{
+                        color:#2ecc71;
+                    }
+                    transform: translateY(7px);
                 }
                 .liked , .saved{
                     cursor:not-allowed;
@@ -515,7 +602,7 @@ header{
                         color: $white;
                         transition: $trans;
                         margin-left: 10px;
-                        padding: 1px 20px;
+                        padding: 5px 10px;
                         &:hover{
                             color: $dark-bleu;
                             background-color: $white;
@@ -524,19 +611,22 @@ header{
                 }
             }
             .reponds{
-                h1{
+                .head{
                     display:flex;
                     align-items:center;
-                    justify-content:space-evenly;
-                    cursor:pointer;
-                    font-size:1.5rem;
-                    font-weight:600;
-                    margin-bottom:20px;
-                    padding:10px;
-                    color:$bleu;
+                    justify-content:space-between;
                     border:2px solid $bleu;
                     background-color:$grey;
-                    span{
+                    padding:10px;
+                    margin-bottom:20px;
+
+                    .copy_button:active{
+                        i{
+                            color:#2ecc71;
+                        }
+                        transform: translateY(7px);
+                    }
+                    .length{
                         padding: 3px 11px 7px 11px;
                         background: $bleu;
                         color: $white;
@@ -544,9 +634,21 @@ header{
                         font-size: 1.2rem;
                         margin-left: 30px;
                     }
+                    h1{
+                        // display:flex;
+                        // align-items:center;
+                        // justify-content:space-evenly;
+                        cursor:pointer;
+                        font-size:1.5rem;
+                        font-weight:600;
+                        padding:10px;
+                        color:$bleu;
+                    }
                     p{
                         margin-top:15px;
-                        color:$white;
+                        color:$main-dark;
+                        font-size:1.4rem;
+                        cursor:pointer;
                     }
                 }
                 li img{
@@ -567,8 +669,8 @@ header{
                         font-size:2rem;
                         background-color:$bleu;
                         color:$white;
-                        padding: 0 10px;
-                        margin-left: 10px;
+                        padding: 3.5px 10px;
+                        margin: 0 10px;
                         transition:$trans;
                         cursor:pointer;
                         border:1px solid $bleu;
@@ -824,7 +926,41 @@ header{
     color:#f0f9ff;
     background-color:$dark-bleu;
   }
-  
+  .footer-dark .contact{
+    form {
+        display:flex;
+        align-items:center;
+        input{
+            border-radius: 0;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid $bleu;
+            transition: $trans;
+            &:focus{
+                box-shadow: $shadow;
+        }
+    }
+        button{
+            background-color: $bleu;
+            color: $white;
+            border: 1px solid $bleu;
+            transition: $trans;
+            padding: 8px 14px;
+            font-size:1.4rem;
+            border-radius:0;
+            &:hover{
+                background-color: $blue-secondaire;
+            }
+            &:focus{
+                box-shadow: $shadow;
+            }
+        }
+    
+  }
+}
+.footer-dark .link{
+    padding-left:100px;
+}
   .footer-dark h3 {
     margin-top:0;
     margin-bottom:12px;
@@ -855,6 +991,16 @@ header{
       text-align:center;
       padding-bottom:20px;
     }
+    .footer-dark .contact{
+        text-align:center;
+        padding :5px 50px;
+        form button{
+            padding: 7px 14px;
+        }
+    }
+    .footer-dark .link{
+        display:none;
+    }
   }
   
   .footer-dark .item.text {
@@ -872,38 +1018,38 @@ header{
     margin-bottom:0;
   }
   
-  .footer-dark .item.social {
-    text-align:center;
-  }
+//   .footer-dark .item.social {
+//     text-align:center;
+//   }
   
-  @media (max-width:991px) {
-    .footer-dark .item.social {
-      text-align:center;
-      margin-top:20px;
-    }
-  }
+//   @media (max-width:991px) {
+//     .footer-dark .item.social {
+//       text-align:center;
+//       margin-top:20px;
+//     }
+//   }
   
-  .footer-dark .item.social > a {
-    font-size:20px;
-    width:36px;
-    height:36px;
-    line-height:36px;
-    display:inline-block;
-    text-align:center;
-    border-radius:50%;
-    box-shadow:0 0 0 1px rgba(255,255,255,0.4);
-    margin:0 8px;
-    color:#fff;
-    opacity:0.75;
-  }
+//   .footer-dark .item.social > a {
+//     font-size:20px;
+//     width:36px;
+//     height:36px;
+//     line-height:36px;
+//     display:inline-block;
+//     text-align:center;
+//     border-radius:50%;
+//     box-shadow:0 0 0 1px rgba(255,255,255,0.4);
+//     margin:0 8px;
+//     color:#fff;
+//     opacity:0.75;
+//   }
   
-  .footer-dark .item.social > a:hover {
-    opacity:0.9;
-  }
+//   .footer-dark .item.social > a:hover {
+//     opacity:0.9;
+//   }
   
   .footer-dark .copyright {
     text-align:center;
-    padding-top:24px;
+    padding-top:7px;
     opacity:0.3;
     font-size:13px;
     margin-bottom:0;
@@ -952,6 +1098,9 @@ header{
                         color:#dd4b39;
                     }
                 }
+                p{
+                    font-size:1.3rem;
+                }
             }
         }
     }
@@ -990,12 +1139,6 @@ header{
         display:none;
     }
 }
-
-// Dark mode
-$main-dark:#212529;
-$secondair-dark:#343a40;
-$dark-white:#f8f9fa;
-$dark-grey:#d1ccc0;
 
 
 .login{
@@ -1169,8 +1312,15 @@ body.dark{
         }
     }
 }
-#questions.dark .item .reponds h1{
+#questions.dark .item .reponds .head{
     background-color:$secondair-dark !important;
+    .copy_button{
+        color:$white !important;
+    }
+}
+#questions.dark .item .reponds .form form label:hover{
+    background-color:$white !important;
+    color:$main-dark !important;
 }
 footer.dark{
     background-color: $main-dark !important;
@@ -1190,7 +1340,7 @@ footer.dark{
         }
         ul li{
             border-bottom: 1px solid $green !important;
-            a{
+            a,p{
                 color: $dark-grey !important;
             }
         }
@@ -1215,12 +1365,12 @@ footer.dark{
 }
 
 // Profile 
-.profile{
+#profile{
     background: $grey;
     border-bottom:5px solid $bleu;
     padding: 0 20px;
     padding-top:168px;
-    .col-lg-4{
+    .col-lg-3{
         background-color: $dark-bleu;
         padding: 20px 0;
         text-align: center;
@@ -1237,7 +1387,7 @@ footer.dark{
             color: $white;
         }
         .info{
-            padding: 10px 64px;
+            padding: 10px 0;
             ul{
                 li{
                     padding: 10px;
@@ -1257,16 +1407,15 @@ footer.dark{
             }
         }
     }
-    .col-lg-8{
-        padding: 15px 0;
+    .col-lg-9{
+        padding: 15px 25px;
         .saved_posts{
             h1{
                 font-size: 2rem;
-                margin: 10px;
                 font-weight: bold;
                 background-color: $white;
                 padding: 10px;
-                border-radius: 8px;
+                border-radius: 4px;
             }
             .row{
                 padding-left: 20px;
@@ -1317,8 +1466,28 @@ footer.dark{
     }
 }
 
+#profile.dark{
+    background-color : $main-dark !important;
+    .col-lg-9{
+        h1{
+            background-color : $secondair-dark !important;
+            color:$white !important;
+        }
+        .col-4{
+            background-color :$secondair-dark !important;
+            color:$white !important;
+            &::hover{
+                background-color:$dark-bleu !important;
+            }
+            .head button{
+                color:$white !important;
+            }
+        }
+    }
+}
+
 @media (max-width: 767px){
-    .profile .col-lg-8 .saved_posts .col-4{
+    #profile .col-lg-9 .saved_posts .col-4{
         width: 46.3333%;
     }
 }

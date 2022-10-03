@@ -32,12 +32,16 @@
                     </div>
                 </div>
                 <div class="reponds">
-                    <h1 @click="afficheDisscusions = !afficheDisscusions">
-                        {{change_langue("Discussion","دردشة")}}
-                        <span> {{ question.solutions.length }} </span>
-                        <p v-if="!afficheDisscusions"><i class="fa-solid fa-angle-down"></i></p>
-                        <p v-else><i class="fa-solid fa-angle-up"></i></p>
-                    </h1>
+                    <div class=head>
+                        <h1>
+                            {{change_langue("Discussion","دردشة")}}
+                        </h1>
+                            <span class="length"> {{ question.solutions.length }} </span>
+                        <button @click="copy(question.slug)" class="copy_button">
+                            <i class="fas fa-copy"></i>
+                            <span> {{change_langue('copy','نسخ')}}</span>
+                        </button>
+                        </div>
                     <div class="form mb-4">
                         <form
                             v-on:submit.prevent="formSubmit"
@@ -111,13 +115,13 @@
                         type="text"
                         v-model="question_form.title"
                         class="form-control"
-                       :placeholder="change_langue('Titre *','العنوان *')"
+                       :placeholder="change_langue('Titre *','عنوان السؤال *')"
                         required
                     />
                     <textarea
                         name="body"
                         v-model="question_form.body"
-                         :placeholder="change_langue('Content ...','المحتوى ...')"
+                         :placeholder="change_langue('Content ...','محتوى السؤال ...')"
                         id="body"
                         class="form-control"
                     ></textarea>
@@ -127,6 +131,9 @@
                         placeholder="Upload image"
                         @change="changeImage"
                     />
+                    <div class="alert alert-info my-2">
+                    {{ change_langue('* field is required','* لايجب ان تكون فارغة') }}
+                    </div>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn">{{ change_langue('Add','نشر') }}</button>
                     </div>
@@ -157,6 +164,14 @@ export default {
         };
     },
     methods: {
+        async copy(slug) {
+            try {
+                await navigator.clipboard.writeText(window.location.href+"questions/" + slug);
+                this.$toastr.s("the question is copied");
+            } catch($e) {
+                this.$toastr.s("cannot copie this question");
+            }
+        },
         change_langue(an,ar){
             return this.langue=='ar'? ar : an;
         },

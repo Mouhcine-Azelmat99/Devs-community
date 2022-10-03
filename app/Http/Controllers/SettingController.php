@@ -31,14 +31,15 @@ class SettingController extends Controller
         $setting=Setting::where('user_id',$user_id);
         if ($setting->count()>0) {
             $setting->update([
-                'theme'=>$request->theme
+                'dark_theme'=>!$request->theme
             ]);
         }else {
             $setting=Setting::create([
                 'user_id' => $user_id,
-                'theme' => $request->theme,
+                'dark_theme' => !$request->theme,
             ]);
         }
+        // return $setting;
         return redirect()->back();
     }
 }

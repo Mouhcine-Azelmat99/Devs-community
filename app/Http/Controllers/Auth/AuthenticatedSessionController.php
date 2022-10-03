@@ -17,7 +17,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        return view('auth.login');
+        $dark_theme=false;
+        $langue='an';
+        return view('auth.login',compact('langue','dark_theme'));
     }
 
     /**

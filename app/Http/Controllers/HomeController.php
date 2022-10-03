@@ -19,13 +19,13 @@ class HomeController extends Controller
         $setting=Setting::where('user_id',$user_id)->first();
         if($setting){
             $langue=$setting->langue;
-            $theme=$setting->theme;
+            $dark_theme=$setting->dark_theme;
         }else{
-            $theme=false;
+            $dark_theme=false;
             $langue='an';
         }
         $categories=Category::all();
-        return view('home',compact('user_id','categories','langue','theme'));
+        return view('home',compact('user_id','categories','langue','dark_theme'));
     }
 
     public function switchModes($mode)
@@ -52,7 +52,15 @@ class HomeController extends Controller
     public function profile()
     {
         $user_id=Auth::id();
-        return view('profile',compact('user_id'));
+        $setting=Setting::where('user_id',$user_id)->first();
+        if($setting){
+            $langue=$setting->langue;
+            $dark_theme=$setting->dark_theme;
+        }else{
+            $dark_theme=false;
+            $langue='an';
+        }
+        return view('profile',compact('user_id','langue','dark_theme'));
     }
 
     public function profilInfo($user_id)

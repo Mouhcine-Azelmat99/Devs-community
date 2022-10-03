@@ -21,12 +21,12 @@ class QuestionController extends Controller
         $setting=Setting::where('user_id',$user_id)->first();
         if($setting){
             $langue=$setting->langue;
-            $theme=$setting->theme;
+            $dark_theme=$setting->dark_theme;
         }else{
-            $theme=false;
+            $dark_theme=false;
             $langue='an';
         }
-        return view('questions.questions',compact('user_id','langue','theme'));
+        return view('questions.questions',compact('user_id','langue','dark_theme'));
     }
 
     public function getQuestions()
@@ -63,12 +63,12 @@ class QuestionController extends Controller
         $setting=Setting::where('user_id',$user_id)->first();
         if($setting){
             $langue=$setting->langue;
-            $theme=$setting->theme;
+            $dark_theme=$setting->dark_theme;
         }else{
-            $theme=false;
+            $dark_theme=false;
             $langue='an';
         }
-        return view('questions.showQuestion',compact('slug','user_id','langue','theme'));
+        return view('questions.showQuestion',compact('slug','user_id','langue','dark_theme'));
     }
     public function show($slug)
     {

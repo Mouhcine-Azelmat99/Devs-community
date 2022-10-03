@@ -21,7 +21,6 @@ return new class extends Migration
             $table->text('content')->nullable();
             $table->string('img')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->string('tag')->nullable();
             $table->foreign("user_id")->references("id")->on("users")->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign("category_id")->references("id")->on("categories")->onDelete('cascade')->onUpdate('cascade');

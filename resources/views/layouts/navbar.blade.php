@@ -11,20 +11,9 @@
     </nav>
     <nav class="navbar navbar-expand-lg" id="navbar">
         <div class="container">
-          <a class="navbar-brand mx-5" href="/">
-          <img src="/images/favicon.png">
+          <a class="navbar-brand" href="/">
+          <img src="/images/devs-logo.png">
           </a>
-          <form action="{{ route('theme') }}" method="POST">
-            @csrf
-            @method('PUT')
-            <button id="dark_mode" type="submit">
-                @if(session('isDark'))
-                <img src="/images/brightness.png" alt="">
-                @else
-                <i class="fas fa-moon"></i>
-                @endif
-            </button>
-        </form>
           <button class="navbar-toggler" id="show" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
           </button>
@@ -66,24 +55,11 @@
                 @else
                     class="navbar-nav ms-auto"
                 @endif id="social-media">
-                <li class="nav-item" id="theme">
-                    <form action="{{ route('theme') }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <button id="mode" type="submit">
-                            @if(session('isDark'))
-                            <img src="/images/brightness.png" alt="">
-                                @else
-                            <i class="fas fa-moon"></i>
-                            @endif
-                        </button>
-                    </form>
-                </li>
                 @auth
                 <li class="nav-item mx-2 mb-2">
                     <a class="nav-link" href="/profile" id="login">{{ Auth::user()->username }}</a>
                 </li>
-                <li class="nav-item mx-2">
+                <li class="nav-item mx-auto">
                     <form action="{{ route('logout') }}" method="POST">
                     @csrf
                         <button class="nav-link" id="login">
@@ -96,21 +72,17 @@
                     </form>
                 </li>
                 @else
-                <li class="nav-item">
+                <li class="nav-item mx-3">
                     <a class="nav-link" href="{{route('login')}}" id="login">
-                         @if($langue=='ar')
+                    @if($langue=='ar')
                         تسجيل الدخول
                     @else
-                         @if($langue=='ar')
                         Login / Register
-                    @else
-                        Posts
-                    @endif
                     @endif
                     </a>
                 </li>
                 @endauth
-                <li class="nav-item">
+                <li class="nav-item mx-auto">
                     <div class="dropdown">
                         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                              @if($langue=='ar')

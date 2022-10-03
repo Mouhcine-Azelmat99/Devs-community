@@ -242,6 +242,14 @@ export default {
         };
     },
     methods: {
+        async copy(slug) {
+            try {
+                await navigator.clipboard.writeText(window.location.href+"post/" + slug);
+                this.$toastr.s("the post is copied");
+            } catch($e) {
+                this.$toastr.s("cannot copie this post");
+            }
+        },
         directionstyle(){
             if(this.langue=='ar')
                 return 'ltr';

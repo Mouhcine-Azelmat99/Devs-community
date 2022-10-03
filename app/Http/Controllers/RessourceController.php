@@ -15,12 +15,12 @@ class RessourceController extends Controller
         $setting=Setting::where('user_id',$user_id)->first();
         if($setting){
             $langue=$setting->langue;
-            $theme=$setting->theme;
+            $dark_theme=$setting->dark_theme;
         }else{
-            $theme=false;
+            $dark_theme=false;
             $langue='an';
         }
-        return view('ressources',compact('user_id','langue'));
+        return view('ressources',compact('user_id','langue','dark_theme'));
     }
 
     public function getRessources()

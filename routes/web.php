@@ -41,7 +41,7 @@ Route::prefix('google')->name('google.')->group( function(){
 });
 
 // Admin routing
-Route::prefix('admin')->name('admin.')->group( function(){
+Route::prefix('admin')->name('admin.')->middleware('admin')->group( function(){
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('categories', [CategoryController::class, 'index'])->name('categories');
     Route::get('users', [AdminController::class, 'getUsers'])->name('users');
@@ -76,5 +76,8 @@ Route::post('/questions', [QuestionController::class, 'store'])->name('questions
 Route::get('/questions/{slug}', [QuestionController::class, 'showQuestion'])->name('questions.show');
 
 // Setting
-Route::post('/langue', [SettingController::class, 'changeLangue'])->name('langue');
-Route::post('/theme', [SettingController::class, 'changeTheme'])->name('theme');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/langue', [SettingController::class, 'changeLangue'])->name('langue');
+    Route::post('/theme', [SettingController::class, 'changeTheme'])->name('theme');
+});

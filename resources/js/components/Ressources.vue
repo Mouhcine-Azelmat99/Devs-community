@@ -109,10 +109,13 @@
                                     source_item.title
                             }}
                             </a>
-                            <a v-else="source_item.lien_youtub" :href="source_item.lien_youtub" target="_blank">{{
+                            <a v-else-if="source_item.lien_youtub" :href="source_item.lien_youtub" target="_blank">{{
                                     source_item.title
                             }}
                             </a>
+                            <p v-else>
+                                {{source_item.title}}
+                            </p>
                             <a v-if="source_item.lien_site" class="mx-3" :href="source_item.lien_site" target="_blank">
                                 <i class="fas fa-globe"></i>
                             </a>
@@ -126,13 +129,13 @@
         </div>
         <div class="col-lg-4" id="sidebar" :style="{ direction: formDir() }">
             <div class="addPost">
-                <div v-if="validation" class="alert alert-danger my-2">
+                <div v-if="validation && !isapp" class="alert alert-danger my-2">
                     {{ validation }}
                 </div>
-                <input type="text" v-model="source.title" class="form-control"  :placeholder="change_langue('Name *','اسم المجموعة')" required />
-                <textarea v-model="source.lien1" :placeholder="change_langue('Lien 1','رابط الموقع')" id="body"
+                <input type="text" v-model="source.title" class="form-control"  :placeholder="change_langue('Name *','* اسم المجموعة')" required />
+                <textarea v-model="source.lien1" :placeholder="change_langue('link of website','رابط الموقع')" id="body"
                     class="form-control"></textarea>
-                <textarea v-model="source.lien2" :placeholder="change_langue('Lien 2','رابط اخر')" id="body"
+                <textarea v-model="source.lien2" :placeholder="change_langue('Youtube link','رابط اليوتيوب')" id="body"
                     class="form-control"></textarea>
                 <div class="mb-3">
                     <label class="form-controll" for="type0">select ressource</label>
@@ -145,6 +148,13 @@
                 </div>
                 <input type="text" v-if="source.ressource_id==0" v-model="source.ressource_name" class="form-control" :placeholder="change_langue('New Collection','اضافة مجموعة جدبدة')"
                     required />
+                <div class="my-2" v-if="source.lien1 == '' && source.lien2 == ''">
+                    <input type="checkbox" id="isapp" :value="false" v-model="isapp">
+                    <label for="isapp">{{change_langue('Is application ?',"عبارة عن تطبيق ؟")}}</label>
+                </div>
+                <div class="alert alert-info my-2">
+                    {{ change_langue('* field is required','* لايجب ان تكون فارغة') }}
+                </div>
                 <div class="d-grid gap-2">
                     <button class="btn" @click="addSource">{{ change_langue('Add','اضافة') }}</button>
                 </div>
@@ -158,6 +168,7 @@ export default {
     props:['user_id','langue'],
     data() {
         return {
+            isapp:false,
             isloaded: false,
             validation: "",
             source: {
@@ -180,18 +191,16 @@ export default {
             return this.langue === "ar" ? "rtl" : "ltr";
         },
         addSource() {
-            console.log(this.source);
             if (this.source.title == "")
                 this.validation = "title of source must be no empty !!";
-            else if (this.source.lien1 == "" && this.source.lien2 == "")
-                this.validation = "as least one lien must be no empty !!";
+            else if (this.source.lien1 == "" && this.source.lien2 == "" && !this.isapp)
+                this.validation = "as least one field must be no empty !!";
             else if (
                 this.source.ressource_id === 0 &&
                 this.source.ressource_name === ""
             )
                 this.validation = "ressource must be not empty !!";
             else {
-                console.log(this.source);
                 axios
                     .post("/api/source", this.source)
                     .then((res) => {

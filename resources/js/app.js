@@ -31,5 +31,6 @@ const app = new Vue({
         Questions,
         Showuestion,
         Postscategory,
+        
     }
 });

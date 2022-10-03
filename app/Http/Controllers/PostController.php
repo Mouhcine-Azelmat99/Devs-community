@@ -57,10 +57,15 @@ class PostController extends Controller
     {
         $user_id=Auth::id();
         $setting=Setting::where('user_id',$user_id)->first();
-        $langue=$setting->langue;
-        $theme=$setting->theme;
+        if($setting){
+            $langue=$setting->langue;
+            $dark_theme=$setting->dark_theme;
+        }else{
+            $dark_theme=false;
+            $langue='an';
+        }
         $categories=Category::all();
-        return view('posts.showPost',compact('slug','user_id','categories','langue','theme'));
+        return view('posts.showPost',compact('slug','user_id','categories','langue','dark_theme'));
     }
 
     /**
@@ -142,9 +147,14 @@ class PostController extends Controller
         $category=Category::where('name',$category)->first();
         $setting=Setting::where('user_id',$user_id)->first();
         $category_id=$category->id;
-        $langue=$setting->langue;
-        $theme=$setting->theme;
-        return view('posts.postsCategories',compact('category_id','user_id','langue','theme'));
+        if($setting){
+            $langue=$setting->langue;
+            $dark_theme=$setting->dark_theme;
+        }else{
+            $dark_theme=false;
+            $langue='an';
+        }
+        return view('posts.postsCategories',compact('category_id','user_id','langue','dark_theme'));
     }
 
     public function getPostsByCategory($category_id,$user_id){
@@ -241,9 +251,6 @@ class PostController extends Controller
         }
         if(isset($request->content)){
             $post->content=$request->content;
-        }
-        if(isset($request->tag)){
-            $post->cat=$request->tag;
         }
 
         $slug=Str::slug($request->title,'-');

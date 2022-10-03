@@ -137,6 +137,10 @@
                             <i class="fas fa-bookmark"></i>
                             <span> {{change_langue('Save','حفظ')}}</span>
                         </button>
+                        <button @click="copy(post.slug)" class="copy_button">
+                            <i class="fas fa-copy"></i>
+                            <span> {{change_langue('copy','نسخ')}}</span>
+                        </button>
                     </div>
                     <div id="comment" v-if="showComment">
                         <ul>
@@ -179,7 +183,7 @@
                         class="form-control"></textarea>
                     <div class="mb-3">
                         <select class="form-select" v-model="post_form.category_id">
-                            <option :disabled="true" selected>
+                            <option disabled selected :value="0">
                                 {{change_langue('Select Category',"اختر الصنف")}}
                             </option>
                             <option v-for="category in categories" :key="category.id" :value="category.id">
@@ -189,8 +193,10 @@
                         <input v-if="post_form.category_id == 0" type="text" v-model="post_form.newCategory"
                             class="form-control" :placeholder="change_langue('New Category','اضافة صنف جدبد')" />
                     </div>
-                    <input type="text" v-model="post_form.cat" class="form-control" placeholder="#" />
                     <input type="file" @change="onChange" class="form-control" :placeholder="change_langue('Upload image','تحميل صورة')"/>
+                    <div class="alert alert-info my-2">
+                    {{ change_langue('* field is required','* لايجب ان تكون فارغة') }}
+                    </div>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn">{{ change_langue('Add','نشر') }}</button>
                     </div>
@@ -240,7 +246,7 @@ Vue.use(VueToastr, {
     defaultTimeout: 10000,
     defaultProgressBar: false,
     defaultType: "info",
-    defaultPosition: "toast-bottom-right",
+    defaultPosition: "toast-bottom-left",
     defaultStyle: { "background-color": "#2ecc71" },
 });
 
@@ -256,7 +262,6 @@ export default {
                 content: "",
                 user_id: this.user_id,
                 category_id: 0,
-                cat: "",
                 newCategory: "",
                 file: null,
             },
@@ -283,6 +288,14 @@ export default {
         };
     },
     methods: {
+        async copy(slug) {
+            try {
+                await navigator.clipboard.writeText(window.location.href+"post/" + slug);
+                this.$toastr.s("the post is copied");
+            } catch($e) {
+                this.$toastr.s("cannot copie this post");
+            }
+        },
         change_langue(an,ar){
             return this.langue=='ar'? ar : an;
         },
@@ -295,7 +308,7 @@ export default {
             return "/images/" + elem;
         },
         arDir: function (elem) {
-            return elem === "ar" ? "rtl" : "ltr";
+            return elem === "ar" || elem=="fa" ? "rtl" : "ltr";
         },
         showPost: function (slug) {
             window.location.href = "/post/" + slug;
@@ -327,7 +340,6 @@ export default {
         },
         addComment: function (id) {
             this.comment.post_id = id;
-            console.log(this.comment);
             axios
                 .post("/api/comment", this.comment)
                 .then((res) => {
@@ -366,7 +378,6 @@ export default {
                 }
                 data.append("content", this.post_form.content);
                 data.append("user_id", this.post_form.user_id);
-                data.append("cat", this.post_form.cat);
                 data.append("title", this.post_form.title);
                 data.append("category_id", this.post_form.category_id);
                 axios
@@ -400,7 +411,6 @@ export default {
                 .get("/api/categories")
                 .then((res) => {
                     this.categories = res.data;
-                    console.log(this.categories);
                     this.isloaded2=true;
                 })
                 .catch((err) => console.log(err));
