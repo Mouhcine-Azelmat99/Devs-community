@@ -48,7 +48,7 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group( function(){
     Route::get('questions', [AdminController::class, 'questions'])->name('questions');
     Route::get('ressources', [AdminController::class, 'ressources'])->name('ressources');
     Route::delete('ressources/{id}', [AdminController::class, 'deleteRessources'])->name('ressources.destroy');
-    Route::get('sources', [AdminController::class, 'deleteSources'])->name('sources.destroy');
+    Route::delete('sources/{id}', [AdminController::class, 'deleteSources'])->name('sources.destroy');
     Route::delete('questions/{id}', [AdminController::class, 'deleteQuestion'])->name('questions.destroy');
     Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::delete('categories/{id}', [CategoryController::class, 'delete'])->name('categories.delete');

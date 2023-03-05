@@ -59,7 +59,7 @@ class AdminController extends Controller
         $sources=Source::orderBy('ressource_id')->get();
         return view('admin.ressources',compact('ressources','sources'));
     }
-    public function deleteSource($id)
+    public function deleteSources($id)
     {
         $Source=Source::find($id)->delete();
         return redirect('admin/ressources')->with('msg', 'Source has been deleted successfully');

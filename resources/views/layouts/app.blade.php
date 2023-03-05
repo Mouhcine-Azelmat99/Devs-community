@@ -23,7 +23,7 @@
     class="arab"
 @endif>
     <div class="loader">
-        <img src="{{asset('images/Pulse-1s-200px.svg')}}" alt="loader">
+        <img src="{{asset('images/Spinner-1s-200px.svg')}}" alt="loader">
     </div>
     @auth @else
         <div class="login_modal">
@@ -63,7 +63,7 @@
                                 </div>
                                 <a href="register">I don't have account</a>
                                 <div class="d-grid gap-2">
-                                    <button type="submit" class="btn py-2">Confirme</button>
+                                    <button type="submit" class="btn py-2 btn-dark" style="background-color: black">Login</button>
                                 </div>
                                 <div class="d-grid gap-2">
                                     <a href="{{ route('facebook.login') }}" style="background:#1877F2;color:#fff" class="btn btn-facebook py-2 btn-user btn-block">
@@ -169,7 +169,7 @@
     $(function(){
         setTimeout(() => {
             $(".loader").fadeOut(400)
-        }, 500);
+        }, 2200);
     })
     $(function(){
         setTimeout(() => {
