@@ -31,13 +31,13 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
     'google' => [
-        'client_id' => '654103914700-tudh12ujo7401l48uobrf4p2du00pvgb.apps.googleusercontent.com',
-        'client_secret' => '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',
+        'client_id' => 'your google_id',
+        'client_secret' => '*************',
         'redirect' => 'http://localhost:8000/google/callback',
     ],
     'facebook' => [
-        'client_id' => '1065098717715216', //USE FROM FACEBOOK DEVELOPER ACCOUNT
-        'client_secret' => '1a872f2b6c64863718b56077da662308', //USE FROM FACEBOOK DEVELOPER ACCOUNT
+        'client_id' => 'your facebook id', //USE FROM FACEBOOK DEVELOPER ACCOUNT
+        'client_secret' => '*************', //USE FROM FACEBOOK DEVELOPER ACCOUNT
         'redirect' => 'http://localhost:8000/facebook/callback/'
     ],
 
